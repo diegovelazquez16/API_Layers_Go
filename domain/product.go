@@ -1,22 +1,15 @@
 package domain
 
-type Product struct{
-	id int32 
-	name string
-	price float32
+type Product struct {
+	ID    int32   `gorm:"primaryKey;autoIncrement" json:"id"`
+	Name  string  `json:"name"`
+	Price float32 `json:"price"`
 }
 
-func NewProduct(name string, price float32) *Product{
-	return &Product{id:1, name: name, price: price}
-} // visualizar como constuctor
-
-func (p*Product)GetName() string{
-	return p.name                    // asi se crean metodos nuevos "bindeando" y este es un getter
+func NewProduct(name string, price float32) *Product {
+	return &Product{Name: name, Price: price}
 }
 
-func (p*Product) SetName(name string) {
-	p.name = name                     // setter
-}
 
 // interfaces para plantillas de datos (revisar reglas del negocio)
 // clases para lo mismo pero con metodos 
