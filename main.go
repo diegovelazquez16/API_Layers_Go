@@ -44,10 +44,13 @@ func main() {
 	userRepo := &userRepo.UserRepositoryImpl{DB: core.GetDB()}
 
 	createUserUC := &userUsecase.CreateUserUseCase{UserRepo: userRepo}
+	getAllUsersUC := &userUsecase.GetAllUsersUseCase{UserRepo: userRepo}
 
 	userCreateController := &userControllers.UserCreateController{CreateUserUC: createUserUC}
+	userGetAllController := &userControllers.UserGetAllController{GetAllUsersUC: getAllUsersUC}
 
-	userRoutes.UserRoutes(app, userCreateController, )
+
+	userRoutes.UserRoutes(app, userCreateController, userGetAllController)
 
 
 

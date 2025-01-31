@@ -7,9 +7,16 @@ import (
 
 )
 
-func UserRoutes(router *gin.Engine, createController *controllers.UserCreateController,) {
+func UserRoutes(
+	router *gin.Engine,
+	createController *controllers.UserCreateController,
+	getAllController *controllers.UserGetAllController,
+
+) {
 	group := router.Group("/users")
 	{
-		group.POST("", createController.Create)     // Crear Usuario
+		group.POST("", createController.Create)          
+		group.GET("", getAllController.GetAll)           
+    
 	}
 }
