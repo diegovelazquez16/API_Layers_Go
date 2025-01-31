@@ -10,13 +10,17 @@ func ProductRoutes(
 	createController *controllers.ProductController,
 	getController *controllers.ProductGetController,
 	updateController *controllers.ProductUpdateController,
+	deleteController *controllers.ProductDeleteController,
+	getAllController *controllers.ProductGetAllController,
 
 ) {
 	group := router.Group("/products")
 	{
-		group.POST("/new", createController.CreateProduct)        
-		group.GET("/get/:id", getController.Get)  
+		group.POST("/", createController.CreateProduct)        
+		group.GET("/:id", getController.Get)  
 		group.PUT("/:id", updateController.Update)
+		group.DELETE("/:id", deleteController.Delete)
+		group.GET("/", getAllController.GetAll)
 
 	}
 }
