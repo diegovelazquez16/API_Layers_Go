@@ -17,14 +17,15 @@ func main() {
 
 	productRepo := &repository.ProductRepositoryImpl{DB: core.GetDB()} 	// Coneccion del repositorio con la db
 
+	createUC := &aplication.CreateProductUseCase{ProductRepo: productRepo}
+	getUC := &aplication.GetProductUseCase{ProductRepo: productRepo}
 
-	createProductUC := &aplication.CreateProductUseCase{ProductRepo: productRepo}
 
-	productController := &controllers.ProductController{
-		CreateProductUC: createProductUC,
-	}
+	createController := &controllers.ProductController{CreateProductUC: createUC}
+	getController := &controllers.ProductGetController{GetProductUC: getUC}
 
-	routes.ProductRoutes(app, productController)
+	routes.ProductRoutes(app, createController, getController)
+
 
 	log.Println("API corriendo en http://localhost:8080")
 	if err := app.Run(":8080"); err != nil {
