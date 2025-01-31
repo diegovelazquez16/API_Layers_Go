@@ -2,7 +2,7 @@ package routes
 
 import (
 	"github.com/gin-gonic/gin"
-	"holamundo/infraestructure/controllers"
+	"holamundo/products/infraestructure/controllers"
 )
 
 func ProductRoutes(

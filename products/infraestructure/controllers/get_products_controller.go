@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"strconv"
 	"github.com/gin-gonic/gin"
-	"holamundo/aplication/usecase"
+	"holamundo/products/aplication/usecase"
 )
 
 type ProductGetController struct {

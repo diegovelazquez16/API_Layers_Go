@@ -1,8 +1,8 @@
 package aplication
 
 import (
-	"holamundo/domain/models"
-	"holamundo/domain/repository"
+	"holamundo/products/domain/models"
+	"holamundo/products/domain/repository"
 
 )
 

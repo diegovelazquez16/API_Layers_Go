@@ -5,7 +5,7 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
-	"holamundo/aplication/usecase"
+	"holamundo/products/aplication/usecase"
 )
 
 type ProductDeleteController struct {

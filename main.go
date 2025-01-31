@@ -1,13 +1,22 @@
 package main
 
 import (
-	"holamundo/aplication/usecase"
 	"holamundo/core"
-	"holamundo/domain/repository"
-	"holamundo/infraestructure/controllers"
-	"holamundo/infraestructure/routes"
+	// Productos
+	productUsecase "holamundo/products/aplication/usecase"
+	productRepo "holamundo/products/domain/repository"
+	productControllers "holamundo/products/infraestructure/controllers"
+	productRoutes "holamundo/products/infraestructure/routes"
+
+	// Usuarios
+	userUsecase "holamundo/users/aplication/usecase"
+	userRepo "holamundo/users/domain/repository"
+	userControllers "holamundo/users/infraestructure/controllers"
+	userRoutes "holamundo/users/infraestructure/routes"
 	"log"
-	"github.com/gin-gonic/gin" 
+
+
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
@@ -15,21 +24,32 @@ func main() {
 
 	core.InitializeApp() //De esta manera comienza el proceso de encendido del servidor
 
-	productRepo := &repository.ProductRepositoryImpl{DB: core.GetDB()} 	// Coneccion del repositorio con la db
+	productRepo := &productRepo.ProductRepositoryImpl{DB: core.GetDB()}
 
-	createUC := &aplication.CreateProductUseCase{ProductRepo: productRepo}
-	getUC := &aplication.GetProductUseCase{ProductRepo: productRepo}
-	updateUC := &aplication.UpdateProductUsecase{ProductRepo: productRepo}
-	deleteUC := &aplication.DeleteProductUseCase{ProductRepo: productRepo}
-	getAllUC := &aplication.GetAllProductsUseCase{ProductRepo: productRepo}
+	createProductUC := &productUsecase.CreateProductUseCase{ProductRepo: productRepo}
+	getProductUC := &productUsecase.GetProductUseCase{ProductRepo: productRepo}
+	updateProductUC := &productUsecase.UpdateProductUsecase{ProductRepo: productRepo}
+	deleteProductUC := &productUsecase.DeleteProductUseCase{ProductRepo: productRepo}
+	getAllProductsUC := &productUsecase.GetAllProductsUseCase{ProductRepo: productRepo}
+
+	productCreateController := &productControllers.ProductController{CreateProductUC: createProductUC}
+	productGetController := &productControllers.ProductGetController{GetProductUC: getProductUC}
+	productUpdateController := &productControllers.ProductUpdateController{UpdateProductUC: updateProductUC}
+	productDeleteController := &productControllers.ProductDeleteController{DeleteProductUC: deleteProductUC}
+	productGetAllController := &productControllers.ProductGetAllController{GetAllProductsUC: getAllProductsUC}
+
+	productRoutes.ProductRoutes(app, productCreateController, productGetController, productUpdateController, productDeleteController, productGetAllController)
+
+	// Usuarios
+	userRepo := &userRepo.UserRepositoryImpl{DB: core.GetDB()}
+
+	createUserUC := &userUsecase.CreateUserUseCase{UserRepo: userRepo}
+
+	userCreateController := &userControllers.UserCreateController{CreateUserUC: createUserUC}
+
+	userRoutes.UserRoutes(app, userCreateController, )
 
 
-	createController := &controllers.ProductController{CreateProductUC: createUC}
-	getController := &controllers.ProductGetController{GetProductUC: getUC}
-	updateContoller := &controllers.ProductUpdateController{UpdateProductUC: updateUC}
-	deleteController := &controllers.ProductDeleteController{DeleteProductUC: deleteUC}
-	getAllController := &controllers.ProductGetAllController{GetAllProductsUC: getAllUC}
-	routes.ProductRoutes(app, createController, getController, updateContoller, deleteController, getAllController)
 
 
 	log.Println("API corriendo en http://localhost:8080")

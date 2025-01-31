@@ -2,7 +2,7 @@ package aplication
 
 
 import (
-	"holamundo/domain/repository"
+	"holamundo/products/domain/repository"
 )
 
 type DeleteProductUseCase struct {

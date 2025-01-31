@@ -1,8 +1,8 @@
 package controllers
 
 import (
-	"holamundo/aplication/usecase"
-	"holamundo/domain/models"
+	"holamundo/products/aplication/usecase"
+	"holamundo/products/domain/models"
 	"net/http"
 	"strconv"
 

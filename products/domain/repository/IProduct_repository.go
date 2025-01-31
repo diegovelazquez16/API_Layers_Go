@@ -2,7 +2,7 @@ package repository
 
 import (
 	"gorm.io/gorm"
-	"holamundo/domain/models"
+	"holamundo/products/domain/models"
 )
 
 

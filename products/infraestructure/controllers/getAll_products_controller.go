@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"holamundo/aplication/usecase"
+	"holamundo/products/aplication/usecase"
 	"net/http"
 	"github.com/gin-gonic/gin"
 
