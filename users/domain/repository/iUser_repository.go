@@ -9,6 +9,7 @@ import (
 type IUserRepository interface {
 	Create(user *models.User) error
 	GetAll() ([]models.User, error)
+	GetByID(id uint) (*models.User, error)
 	Update(user *models.User) error// Interfaz para conectar el modelo con el repositorio
 	Delete(id uint) error
 }
@@ -27,6 +28,13 @@ func (r *UserRepositoryImpl) GetAll() ([]models.User, error) {
 	err := r.DB.Find(&users).Error
 	return users, err
 }
+
+func (r *UserRepositoryImpl) GetByID(id uint) (*models.User, error) {
+	var user models.User
+	err := r.DB.First(&user, id).Error
+	return &user, err
+}
+
 func (r *UserRepositoryImpl) Update(user *models.User) error{
 	return r.DB.Save(user).Error
 }
