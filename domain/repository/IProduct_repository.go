@@ -8,7 +8,8 @@ import (
 
 type IProductRepository interface {
 	Create(product *models.Product) error
-	GetByID(id uint) (*models.Product, error) // Interfaz para conectar el modelo con el repositorio
+	GetByID(id uint) (*models.Product, error) 
+	Update(product *models.Product) error// Interfaz para conectar el modelo con el repositorio
 }
 
 type ProductRepositoryImpl struct {
@@ -25,3 +26,8 @@ func (r *ProductRepositoryImpl) GetByID(id uint) (*models.Product, error) {
 	err := r.DB.First(&product, id).Error
 	return &product, err
 }
+
+func (r *ProductRepositoryImpl) Update(product *models.Product) error{
+	return r.DB.Save(product).Error
+}
+

@@ -19,12 +19,14 @@ func main() {
 
 	createUC := &aplication.CreateProductUseCase{ProductRepo: productRepo}
 	getUC := &aplication.GetProductUseCase{ProductRepo: productRepo}
+	updateUC := &aplication.UpdateProductUsecase{ProductRepo: productRepo}
 
 
 	createController := &controllers.ProductController{CreateProductUC: createUC}
 	getController := &controllers.ProductGetController{GetProductUC: getUC}
+	updateContoller := &controllers.ProductUpdateController{UpdateProductUC: updateUC}
 
-	routes.ProductRoutes(app, createController, getController)
+	routes.ProductRoutes(app, createController, getController, updateContoller)
 
 
 	log.Println("API corriendo en http://localhost:8080")
