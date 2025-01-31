@@ -3,8 +3,8 @@ package controllers
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"holamundo/aplication/usecase"
-	"holamundo/domain/models"
+	"holamundo/products/aplication/usecase"
+	"holamundo/products/domain/models"
 )
 
 type ProductController struct {

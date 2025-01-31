@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 
-	"holamundo/domain/models"
+	"holamundo/products/domain/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
