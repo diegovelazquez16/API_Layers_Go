@@ -12,13 +12,15 @@ func UserRoutes(
 	createController *controllers.UserCreateController,
 	getAllController *controllers.UserGetAllController,
 	updateController *controllers.UserUpdateController,
+	deleteController *controllers.UserDeleteController,
 
 ) {
 	group := router.Group("/users")
 	{
 		group.POST("", createController.Create)          
 		group.GET("", getAllController.GetAll)    
-		group.PUT("/:id", updateController.Update)       
+		group.PUT("/:id", updateController.Update)    
+		group.DELETE("/:id", deleteController.Delete )   
     
 	}
 }
