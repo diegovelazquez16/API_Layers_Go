@@ -45,12 +45,15 @@ func main() {
 
 	createUserUC := &userUsecase.CreateUserUseCase{UserRepo: userRepo}
 	getAllUsersUC := &userUsecase.GetAllUsersUseCase{UserRepo: userRepo}
+	updateUserUC := &userUsecase.UpdateUserUseCase{UserRepo: userRepo}
+
 
 	userCreateController := &userControllers.UserCreateController{CreateUserUC: createUserUC}
 	userGetAllController := &userControllers.UserGetAllController{GetAllUsersUC: getAllUsersUC}
+	userUpdateController := &userControllers.UserUpdateController{UpdateUserUC: updateUserUC}
 
 
-	userRoutes.UserRoutes(app, userCreateController, userGetAllController)
+	userRoutes.UserRoutes(app, userCreateController, userGetAllController, userUpdateController)
 
 
 
