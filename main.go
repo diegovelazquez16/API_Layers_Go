@@ -7,16 +7,12 @@ import (
 	productRepo "holamundo/products/domain/repository"
 	productControllers "holamundo/products/infraestructure/controllers"
 	productRoutes "holamundo/products/infraestructure/routes"
-
 	// Usuarios
 	userUsecase "holamundo/users/aplication/usecase"
 	userRepo "holamundo/users/domain/repository"
 	userControllers "holamundo/users/infraestructure/controllers"
 	userRoutes "holamundo/users/infraestructure/routes"
 	"log"
-	"holamundo/users/infraestructure/controllers"
-	"holamundo/users/infraestructure/routes"
-
 	"github.com/gin-gonic/gin"
 )
 
@@ -60,9 +56,15 @@ func main() {
 
 	userRoutes.UserRoutes(app, userCreateController, userGetAllController, userUpdateController, userDeleteController, userGetController)
 
-	pollingController := &controllers.PollingController{GetAllUsersUC: getAllUsersUC}
-	routes.PollingRoutes(app, pollingController)
+	//pollingController := &controllers.PollingController{GetAllUsersUC: getAllUsersUC}
+	//Controladores para short & long polling respectivamente:
+	pollingController := &userControllers.PollingController{GetAllUsersUC: getAllUsersUC}
+	lpollingController := &productControllers.LPollingController{GetAllProductsUseCase: getAllProductsUC}
+	
+	//Rutas para short & long polling respectivamente:
 
+	userRoutes.PollingRoutes(app, pollingController )
+	productRoutes.LPollingRoutes(app,lpollingController )
 
 	log.Println("API corriendo en http://localhost:8080")
 	if err := app.Run(":8080"); err != nil {
