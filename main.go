@@ -14,7 +14,8 @@ import (
 	userControllers "holamundo/users/infraestructure/controllers"
 	userRoutes "holamundo/users/infraestructure/routes"
 	"log"
-
+	"holamundo/users/infraestructure/controllers"
+	"holamundo/users/infraestructure/routes"
 
 	"github.com/gin-gonic/gin"
 )
@@ -59,7 +60,8 @@ func main() {
 
 	userRoutes.UserRoutes(app, userCreateController, userGetAllController, userUpdateController, userDeleteController, userGetController)
 
-
+	pollingController := &controllers.PollingController{GetAllUsersUC: getAllUsersUC}
+	routes.PollingRoutes(app, pollingController)
 
 
 	log.Println("API corriendo en http://localhost:8080")
