@@ -14,10 +14,19 @@ import (
 	userRoutes "holamundo/users/infraestructure/routes"
 	"log"
 	"github.com/gin-gonic/gin"
+	"github.com/gin-contrib/cors"
 )
 
 func main() {
 	app := gin.Default()
+
+	app.Use(cors.New(cors.Config{
+		AllowAllOrigins: true,
+		AllowMethods: []string{"GET", "POST", "PUT", "DELETE"},
+		AllowHeaders: []string{"Origin", "Content-Type", "Authorization"},
+		AllowCredentials: true,
+		
+	}))
 
 	core.InitializeApp() //De esta manera comienza el proceso de encendido del servidor
 

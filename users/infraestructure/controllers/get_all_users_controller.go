@@ -9,7 +9,7 @@ import (
 type UserGetAllController struct {
 	GetAllUsersUC *usecase.GetAllUsersUseCase
 }
-
+//cambia GetAll a execut o run y lo mismo para todos
 func (c *UserGetAllController) GetAll(ctx *gin.Context) {
 	users, err := c.GetAllUsersUC.Execute()
 	if err != nil {

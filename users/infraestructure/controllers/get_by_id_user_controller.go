@@ -17,7 +17,7 @@ func (c *UserGetController) GetUserByID(ctx *gin.Context) {
 	idParam := ctx.Param("id")
 	id, err := strconv.Atoi(idParam)
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": "El ID debe ser un número válido."})
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "El ID debe estar registrado o ser un numero valido"})
 		return
 	}
 
@@ -27,6 +27,5 @@ func (c *UserGetController) GetUserByID(ctx *gin.Context) {
 		return
 	}
 
-	// Devolver la respuesta
 	ctx.JSON(http.StatusOK, user)
 }

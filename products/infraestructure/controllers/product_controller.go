@@ -25,7 +25,7 @@ func (c *ProductController) CreateProduct(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusCreated, gin.H{
-		"message": "Product created successfully",
+		"message": "Product creado",
 		"product": product,
 	})
 }

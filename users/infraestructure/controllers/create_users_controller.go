@@ -26,6 +26,6 @@ func (c *UserCreateController) Create(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusCreated, gin.H{
 		"message": "Usuario creado de forma exitosa",
-		"product": user,
+		"user": user,
 	})
 }
