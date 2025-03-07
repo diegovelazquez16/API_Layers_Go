@@ -5,8 +5,12 @@ import (
 	"log"
 	"os"
 
-	"holamundo/products/domain/models"
+
 	userModels "holamundo/users/domain/models"
+	pedidoModels "holamundo/pedidos/domain/models"
+	pagoModels "holamundo/pagos/domain/models"
+	restauranteModels "holamundo/restaurantes/domain/models"
+
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -31,7 +35,7 @@ func DatabaseConnection() {
 
 	DB = db
 	log.Println("Conexión a la base de datos exitosa.")
-	err = DB.AutoMigrate(&models.Product{}, &userModels.User{})
+	err = DB.AutoMigrate(&userModels.User{}, &pedidoModels.Pedido{}, pagoModels.Pago{}, &restauranteModels.Restaurante{})
 	if err != nil {
 		log.Fatalf("Error aplicando migración: %v", err)
 	}

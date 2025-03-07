@@ -2,7 +2,7 @@ package main
 
 import (
 	"holamundo/core"
-	"holamundo/bootstrap"
+	"holamundo/launch"
 	"log"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-contrib/cors"
@@ -20,7 +20,7 @@ func main() {
 		AllowCredentials: true,
 	}))
 
-	bootstrap.RegisterRoutes(app)
+	launch.RegisterRoutes(app)
 
 	log.Println("API corriendo en http://localhost:8080")
 	if err := app.Run(":8080"); err != nil {
