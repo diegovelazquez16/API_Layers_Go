@@ -8,7 +8,6 @@ import (
 
 	userModels "holamundo/users/domain/models"
 	pedidoModels "holamundo/pedidos/domain/models"
-	pagoModels "holamundo/pagos/domain/models"
 	restauranteModels "holamundo/restaurantes/domain/models"
 
 
@@ -35,7 +34,7 @@ func DatabaseConnection() {
 
 	DB = db
 	log.Println("Conexión a la base de datos exitosa.")
-	err = DB.AutoMigrate(&userModels.User{}, &pedidoModels.Pedido{}, pagoModels.Pago{}, &restauranteModels.Restaurante{})
+	err = DB.AutoMigrate(&userModels.User{}, &pedidoModels.Pedido{}, &restauranteModels.Restaurante{})
 	if err != nil {
 		log.Fatalf("Error aplicando migración: %v", err)
 	}

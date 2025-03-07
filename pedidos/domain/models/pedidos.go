@@ -1,9 +1,6 @@
 package models
 
-import (
-    "holamundo/pagos/domain/models"
 
-)
 
 type Pedido struct {
     ID            uint    `gorm:"primaryKey"`
@@ -15,7 +12,6 @@ type Pedido struct {
     Total         float64 `gorm:"not null"`
     Estado        string  `gorm:"not null"` 
     PagoID        uint    `gorm:"not null"`
-    Pago          models.Pago   `gorm:"foreignKey:PagoID"`
 }
 
     
