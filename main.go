@@ -1,20 +1,34 @@
 package main
 
 import (
+	"log"
 	"holamundo/core"
 	"holamundo/launch"
-	"log"
+	"holamundo/pedidos/infraestructure/messaging"  // Agregado para consumir notificaciones
 	"github.com/gin-gonic/gin"
 	"github.com/gin-contrib/cors"
 )
 
 func main() {
 	core.InitializeApp()
-	
-	app := gin.Default()
 
+	pedidoPublisher, err := messaging.NewPedidoPublisher()
+	if err != nil {
+		log.Fatalf("Error al conectar con RabbitMQ para pedidos: %v", err)
+	}
+	defer pedidoPublisher.Close() 
+
+	notificacionConsumer, err := messaging.NewNotificacionConsumer() 
+	if err != nil {
+		log.Fatalf("Error al conectar con RabbitMQ: %v", err)
+	}
+	defer notificacionConsumer.Close()
+
+	go notificacionConsumer.StartConsuming()
+
+	app := gin.Default()
 	app.Use(cors.New(cors.Config{
-		AllowAllOrigins:  true,
+		AllowOrigins:  []string{"http://localhost:8081"},
 		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE"},
 		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
 		AllowCredentials: true,
