@@ -1,30 +1,42 @@
 package main
 
 import (
-	"holamundo/aplication/usecase"
-	"holamundo/core"
-	"holamundo/domain/repository"
-	"holamundo/infraestructure/controllers"
-	"holamundo/infraestructure/routes"
 	"log"
-	"github.com/gin-gonic/gin" 
+	"holamundo/core"
+	"holamundo/launch"
+	"holamundo/pedidos/infraestructure/messaging"  // Agregado para consumir notificaciones
+	"github.com/gin-gonic/gin"
+	"github.com/gin-contrib/cors"
 )
 
 func main() {
-	app := gin.Default()
+	core.InitializeApp()
 
-	core.InitializeApp() //De esta manera comienza el proceso de encendido del servidor
-
-	productRepo := &repository.ProductRepositoryImpl{DB: core.GetDB()} 	// Coneccion del repositorio con la db
-
-
-	createProductUC := &aplication.CreateProductUseCase{ProductRepo: productRepo}
-
-	productController := &controllers.ProductController{
-		CreateProductUC: createProductUC,
+	pedidoPublisher, err := messaging.NewPedidoPublisher()
+	if err != nil {
+		log.Fatalf("Error al conectar con RabbitMQ para pedidos: %v", err)
 	}
+	defer pedidoPublisher.Close() 
 
-	routes.ProductRoutes(app, productController)
+	notificacionConsumer, err := messaging.NewNotificacionConsumer() 
+	if err != nil {
+		log.Fatalf("Error al conectar con RabbitMQ: %v", err)
+	}
+	defer notificacionConsumer.Close()
+
+
+	
+	go notificacionConsumer.StartConsuming()
+
+	app := gin.Default()
+	app.Use(cors.New(cors.Config{
+		AllowOrigins:  []string{"http://localhost:8081"},
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE"},
+		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
+		AllowCredentials: true,
+	}))
+
+	launch.RegisterRoutes(app, pedidoPublisher)
 
 	log.Println("API corriendo en http://localhost:8080")
 	if err := app.Run(":8080"); err != nil {
