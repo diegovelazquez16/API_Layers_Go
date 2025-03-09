@@ -7,7 +7,6 @@ import (
 	amqp "github.com/rabbitmq/amqp091-go"
 )
 
-// PedidoQueue representa el pedido que se enviará a la cola
 type PedidoQueue struct {
 	ID            uint    `json:"id"`
 	UsuarioID     uint    `json:"usuario_id"`
@@ -20,14 +19,12 @@ type PedidoQueue struct {
 	PagoID        uint    `json:"pago_id"`
 }
 
-// PedidoPublisher es el publicador de mensajes a RabbitMQ
 type PedidoPublisher struct {
 	conn    *amqp.Connection
 	channel *amqp.Channel
 	queue   amqp.Queue
 }
 
-// NewPedidoPublisher inicializa el publicador
 func NewPedidoPublisher() (*PedidoPublisher, error) {
 	conn, err := amqp.Dial("amqp://dvelazquez:laconia@75.101.219.208:5672/")
 	if err != nil {
@@ -40,12 +37,12 @@ func NewPedidoPublisher() (*PedidoPublisher, error) {
 	}
 
 	q, err := ch.QueueDeclare(
-		"pedidos", // Nombre de la cola
-		true,      // Durable
-		false,     // Auto-delete
-		false,     // Exclusive
-		false,     // No-wait
-		nil,       // Arguments
+		"pedidos", 
+		true,      
+		false,     
+		false,     
+		false,     
+		nil,       
 	)
 	if err != nil {
 		return nil, err

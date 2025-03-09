@@ -6,10 +6,12 @@ import (
 	pedidoRepo "holamundo/pedidos/domain/repository"
 	pedidoControllers "holamundo/pedidos/infraestructure/controllers"
 	pedidoRoutes "holamundo/pedidos/infraestructure/routes"
+	"holamundo/pedidos/infraestructure/messaging"
+
 	"github.com/gin-gonic/gin"
 )
 
-func RegisterPedidoModule(router *gin.Engine) {
+func RegisterPedidoModule(router *gin.Engine, pedidoPublisher *messaging.PedidoPublisher) {
 	pedidoRepo := &pedidoRepo.PedidosRepositoryImpl{DB: core.GetDB()}
 
 	createPedidoUC := &pedidoUsecase.CreatePedidoUseCase{PedidoRepo: pedidoRepo}
@@ -18,7 +20,10 @@ func RegisterPedidoModule(router *gin.Engine) {
 	updatePedidoUC := &pedidoUsecase.UpdatePedidoUseCase{PedidoRepo: pedidoRepo}
 	deletePedidoUC := &pedidoUsecase.DeletePedidoUseCase{PedidoRepo: pedidoRepo}
 
-	pedidoCreateController := &pedidoControllers.PedidoCreateController{CreatePedidoUC: createPedidoUC}
+	pedidoCreateController := &pedidoControllers.PedidoCreateController{
+		CreatePedidoUC:  createPedidoUC,
+		PedidoPublisher: pedidoPublisher, // Aquí asignas el PedidoPublisher
+	}	
 	pedidoGetAllController := &pedidoControllers.PedidoGetAllController{GetAllPedidosUC: getAllPedidosUC}
 	pedidoGetController := &pedidoControllers.PedidoGetController{GetPedidoUC: getPedidoUC}
 	pedidoUpdateController := &pedidoControllers.PedidoUpdateController{UpdatePedidoUC: updatePedidoUC}

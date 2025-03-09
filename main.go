@@ -24,6 +24,8 @@ func main() {
 	}
 	defer notificacionConsumer.Close()
 
+
+	
 	go notificacionConsumer.StartConsuming()
 
 	app := gin.Default()
@@ -34,7 +36,7 @@ func main() {
 		AllowCredentials: true,
 	}))
 
-	launch.RegisterRoutes(app)
+	launch.RegisterRoutes(app, pedidoPublisher)
 
 	log.Println("API corriendo en http://localhost:8080")
 	if err := app.Run(":8080"); err != nil {

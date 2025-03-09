@@ -30,12 +30,12 @@ func NewNotificacionConsumer() (*NotificacionConsumer, error) {
 	}
 
 	q, err := ch.QueueDeclare(
-		"notificaciones", // nombre de la cola
-		true,             // durable
-		false,            // auto-delete
-		false,            // exclusive
-		false,            // no-wait
-		nil,              // argumentos
+		"notificaciones", 
+		true,             
+		false,            
+		false,            
+		false,            
+		nil,              
 	)
 	if err != nil {
 		return nil, err
