@@ -55,7 +55,6 @@ func NewPedidoPublisher() (*PedidoPublisher, error) {
 	}, nil
 }
 
-// Publish envía un pedido a la cola de RabbitMQ
 func (p *PedidoPublisher) Publish(pedido PedidoQueue) error {
 	body, err := json.Marshal(pedido)
 	if err != nil {
@@ -80,7 +79,6 @@ func (p *PedidoPublisher) Publish(pedido PedidoQueue) error {
 	return nil
 }
 
-// Close cierra la conexión y el canal de RabbitMQ
 func (p *PedidoPublisher) Close() {
 	p.channel.Close()
 	p.conn.Close()

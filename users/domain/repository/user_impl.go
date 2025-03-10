@@ -2,7 +2,7 @@ package repository
 
 import (
 	"gorm.io/gorm"
-
+	"errors"
 	"holamundo/users/domain/models"
 )
 
@@ -34,3 +34,22 @@ func (r *UserRepositoryImpl) Update(user *models.User) error{
 func (r *UserRepositoryImpl) Delete(id uint) error {
 	return r.DB.Delete(&models.User{}, id).Error
 } 
+
+func (r *UserRepositoryImpl) FindByEmail(email string) (*models.User, error) {
+	var user models.User
+	if err := r.DB.Where("email = ?", email).First(&user).Error; err != nil {
+		return nil, errors.New("usuario no encontrado")
+	}
+	return &user, nil
+}
+
+
+
+func (r *UserRepositoryImpl) GetByEmail(email string) (*models.User, error) {
+	var user models.User
+	err := r.DB.Where("email = ?", email).First(&user).Error
+	if err != nil {
+		return nil, err
+	}
+	return &user, nil
+}

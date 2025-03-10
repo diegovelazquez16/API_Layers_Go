@@ -11,7 +11,7 @@ type Pedido struct {
     Producto3     string
     Total         float64 `gorm:"not null"`
     Estado        string  `gorm:"not null"` 
-    PagoID        uint    `gorm:"not null"`
+    PagoID        uint    `gorm:"not null;default:1"`
 }
 
     

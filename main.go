@@ -30,7 +30,7 @@ func main() {
 
 	app := gin.Default()
 	app.Use(cors.New(cors.Config{
-		AllowOrigins:  []string{"http://localhost:8081"},
+		AllowOrigins:  []string{"http://localhost:8081", "http://localhost:4200"},
 		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE"},
 		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
 		AllowCredentials: true,
