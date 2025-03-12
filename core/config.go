@@ -6,7 +6,7 @@ import (
 	"github.com/joho/godotenv"
 )
 
-// LoadConfig carga las configuraciones desde el archivo .env y retorna las variables requeridas.
+// Aqui se cargan las configuraciones desde el env
 func LoadConfig() {
 	err := godotenv.Load()
 	if err != nil {
