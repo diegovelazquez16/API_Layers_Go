@@ -17,12 +17,14 @@ func RegisterUserModule(router *gin.Engine) {
 	getUserUC := &userUsecase.GetUserUseCase{UserRepo: userRepo}
 	updateUserUC := &userUsecase.UpdateUserUseCase{UserRepo: userRepo}
 	deleteUserUC := &userUsecase.DeleteUserUseCase{UserRepo: userRepo}
+	loginUserUC := &userUsecase.LoginUserUseCase{UserRepo: userRepo}
 
 	userCreateController := &userControllers.UserCreateController{CreateUserUC: createUserUC}
 	userGetAllController := &userControllers.UserGetAllController{GetAllUsersUC: getAllUsersUC}
 	userGetController := &userControllers.UserGetController{GetUserUC: getUserUC}
 	userUpdateController := &userControllers.UserUpdateController{UpdateUserUC: updateUserUC}
 	userDeleteController := &userControllers.UserDeleteController{DeleteUserUC: deleteUserUC}
+	userLoginController := &userControllers.UserLoginController{LoginUseCase:loginUserUC}
 
-	userRoutes.UserRoutes(router, userCreateController, userGetAllController, userUpdateController, userDeleteController, userGetController)
+	userRoutes.UserRoutes(router, userCreateController, userGetAllController, userUpdateController, userDeleteController, userGetController, userLoginController)
 }
